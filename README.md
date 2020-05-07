@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 
 #### Running:
 ```
-$ ./scripts/run.sh
+$ ./start/run.sh
 ```
 **open localhost:5000*
 <hr><hr>
