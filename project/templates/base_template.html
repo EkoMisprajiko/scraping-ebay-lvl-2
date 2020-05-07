@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #loader {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border: 16px solid greenyellow;
+            border-radius: 50%;
+            border-top: 16px solid aliceblue;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite
+            display: none;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0)
+            }
+            100% {
+                -webkit-transform: rotate(360deg)
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+    </style>
+  <title>{{ title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">{{title}}</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--  The Content Goes Heres -->
+    <div class="loader" id="loader"></div>
+    <div class="container">
+      <form action="/" method="post" autocomplete="off">
+          <div class="row">
+              <div class="col-md-4">
+                  <h3>{{ title }}</h3>
+                  <p>Look for 50 products on the first page of ebay.com</p>
+              </div>
+              <div class="col-md-8">
+                  <div class="alert alert-sm alert-info">
+                      <div class="col">
+                          {% if alert == 0 %}
+                            Welcome! Please fill in the search field!
+                          {% else %}
+                            {{ alert }}
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      {{ form.csrf_token }}
+                      <input type="text" class="form-control" placeholder="Search for anything" name="search">
+                  </div>
+                  <button id="search" type="submit" class="btn btn-primary"><i></i>Search</button>
+                  {{ csv | safe }} {{ api | safe }} {{ json | safe }} {{ excel | safe }}
+                  <hr />
+              </div>
+          </div>
+      </form>
+    </div>
+    {% block content %}
+    {% endblock %}
+    </div>
+    <br />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#res-table').DataTable();
+            $('#search').click( function() {
+                    document.getElementById("loader").style.display="block";
+            });
+        });
+        $(window).on('load', function(){
+            document.getElementById("loader").style.display="none";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'base_template.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 table-responsive">
+                <table id="res-table" class="table responsive table-hover">
+                    <thead>
+                      <tr>
+                        <th>Images</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for d in data %}
+                      <tr>
+                        <td><img src="{{ d['image_link']|safe }}"></td>
+                        <td>
+                            <a href="{{ d[product_link]|safe }}">
+                                {{ d['name']|safe }}</a>
+                            <br>
+                            {{ d['price']|safe }}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
